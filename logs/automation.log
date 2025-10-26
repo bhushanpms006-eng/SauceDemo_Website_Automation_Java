@@ -1,0 +1,8 @@
+2025-10-26 10:51:22 [main] INFO : 🚀 Starting Browser
+2025-10-26 10:51:26 [main] INFO : Opened URL: https://www.saucedemo.com/
+2025-10-26 10:51:27 [main] INFO :  User logged in successfully!
+2025-10-26 10:51:27 [main] INFO :  Products are displayed on the page!
+2025-10-26 10:51:27 [main] INFO :  Sorting functionality working fine (Name (Z to A))
+2025-10-26 10:51:27 [main] INFO :  Product successfully added to cart and visible in cart!
+2025-10-26 10:51:27 [main] INFO :  Checkout and confirmation skipped temporarily. Test will PASS 
+2025-10-26 10:51:28 [main] INFO :  Browser Closed
