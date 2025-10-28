@@ -5,8 +5,8 @@
     <classes>
       <class name="tests.TestSauceDemo">
         <methods>
-          <include name="setup"/>
-          <include name="teardown"/>
+          <include name="setUp"/>
+          <include name="tearDown"/>
           <include name="testCompleteFlow"/>
         </methods>
       </class> <!-- tests.TestSauceDemo -->

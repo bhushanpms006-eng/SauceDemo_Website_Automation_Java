@@ -2,20 +2,24 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.apache.logging.log4j.Logger;
+import utilities.LoggerHelper;
 
 public class CartPage {
     private WebDriver driver;
     private Logger log;
-    private By checkoutBtn = By.id("checkout");
 
-    public CartPage(WebDriver driver, Logger log) {
+    private By cartItem = By.className("inventory_item_name");
+
+    public CartPage(WebDriver driver) {
         this.driver = driver;
-        this.log = log;
+        this.log = LoggerHelper.getLogger(CartPage.class);
     }
 
-    public void proceedToCheckout() {
-        driver.findElement(checkoutBtn).click();
-        log.info(" Proceeded to checkout page!");
+    public void verifyProductInCart() {
+        String productName = driver.findElement(cartItem).getText();
+        Assert.assertTrue(productName.contains("Backpack"), " Product not found in cart!");
+        log.info(" Product verified in cart successfully!");
     }
 }

@@ -2,56 +2,50 @@ package base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.apache.logging.log4j.LogManager;
+import utilities.ConfigReader;
+import utilities.LoggerHelper;
 import org.apache.logging.log4j.Logger;
-
-import java.io.File;
-import java.io.IOException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.apache.commons.io.FileUtils;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import java.time.Duration;
 
 public class BaseTest {
-    public WebDriver driver;
-    public Logger log;
+    protected WebDriver driver;
+    protected Logger log;
 
     @BeforeClass
-    public void setup() {
-        log = LogManager.getLogger(BaseTest.class);
-        log.info("🚀 Starting Browser");
+    public void setUp() {
+        // Load configuration file
+        ConfigReader.loadConfig();
+        log = LoggerHelper.getLogger(BaseTest.class);
 
-        // Optional: Use WebDriverManager
-        // WebDriverManager.chromedriver().setup();
+        log.info(" Starting SauceDemo Automation Tests");
 
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://www.saucedemo.com/");
-        log.info("Opened URL: https://www.saucedemo.com/");
-    }
-
-    @AfterMethod
-    public void takeScreenshotOnFailure(ITestResult result) {
-        if (ITestResult.FAILURE == result.getStatus()) {
-            File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            try {
-                File dest = new File("screenshots/" + result.getName() + ".png");
-                FileUtils.copyFile(src, dest);
-                log.error(" Test Failed: " + result.getName() + " | Screenshot saved at: " + dest.getAbsolutePath());
-            } catch (IOException e) {
-                log.error("Exception while taking screenshot: " + e.getMessage());
-            }
+        // Initialize WebDriver based on configuration
+        String browser = ConfigReader.get("browser");
+        if (browser.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup(); 
+            driver = new ChromeDriver();
+        } else {
+            throw new RuntimeException(" Unsupported browser: " + browser);
         }
+
+        // Browser setup
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        // Launch application
+        String url = ConfigReader.get("url");
+        driver.get(url);
+        log.info(" Launched URL: " + url);
     }
 
     @AfterClass
-    public void teardown() {
+    public void tearDown() {
         if (driver != null) {
             driver.quit();
-            log.info(" Browser Closed");
+            log.info(" Browser closed successfully.");
         }
     }
 }

@@ -10,45 +10,75 @@
   <packaging>jar</packaging>
 
   <name>SauceDemo_Website_Automation_Java</name>
-  <url>http://maven.apache.org</url>
 
   <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
-    <!-- Selenium -->
+    <!-- ✅ Selenium -->
     <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-java</artifactId>
-        <version>4.36.0</version>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>4.36.0</version>
     </dependency>
 
-    <!-- TestNG -->
+    <!-- ✅ TestNG -->
     <dependency>
-        <groupId>org.testng</groupId>
-        <artifactId>testng</artifactId>
-        <version>7.11.0</version>
-        <scope>test</scope>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>7.11.0</version>
+      <scope>test</scope>
     </dependency>
 
-    <!-- Log4j2 -->
+    <!-- ✅ Log4j2 (for logging) -->
     <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-api</artifactId>
-        <version>2.21.0</version>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-core</artifactId>
-        <version>2.21.0</version>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.21.0</version>
     </dependency>
 
-    <!-- Optional: WebDriverManager -->
     <dependency>
-        <groupId>io.github.bonigarcia</groupId>
-        <artifactId>webdrivermanager</artifactId>
-        <version>5.5.0</version>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.21.0</version>
+    </dependency>
+
+    <!-- ✅ WebDriverManager (to auto-manage ChromeDriver) -->
+    <dependency>
+      <groupId>io.github.bonigarcia</groupId>
+      <artifactId>webdrivermanager</artifactId>
+      <version>5.5.0</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <!-- ✅ Maven Compiler Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+
+      <!-- ✅ Surefire plugin (for running TestNG tests) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.1.2</version>
+        <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

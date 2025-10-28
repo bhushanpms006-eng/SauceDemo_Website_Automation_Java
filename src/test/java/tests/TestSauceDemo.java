@@ -4,26 +4,29 @@ import base.BaseTest;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.ProductsPage;
+import pages.CartPage;
+import utilities.ConfigReader;
+import utilities.ScreenshotUtil;
 
 public class TestSauceDemo extends BaseTest {
 
     @Test
-    public void test_complete_flow() {
-        LoginPage login = new LoginPage(driver, log);
-        ProductsPage products = new ProductsPage(driver, log);
-        // Login
-        login.login("standard_user", "secret_sauce");
+    public void testCompleteFlow() {
+        try {
+            LoginPage login = new LoginPage(driver);
+            ProductsPage products = new ProductsPage(driver);
+            CartPage cart = new CartPage(driver);
 
-        // Verify Products
-        products.verifyProductsDisplayed();
+            login.login(ConfigReader.get("username"), ConfigReader.get("password"));
+            products.verifyProductsDisplayed();
+            products.sortProducts("Name (Z to A)");
+            products.addProductToCart();
+            cart.verifyProductInCart();
 
-        // Sort Products
-        products.sortProducts("Name (Z to A)");
-
-        // Add Product to Cart
-        products.addProductToCart();
-
-        // Skip Checkout & Confirmation temporarily
-        log.info(" Checkout and confirmation skipped temporarily. Test will PASS ");
+        } catch (Exception e) {
+            ScreenshotUtil.captureScreenshot(driver, "test_failure");
+            log.error(" Test failed: " + e.getMessage());
+            throw e;
+        }
     }
 }

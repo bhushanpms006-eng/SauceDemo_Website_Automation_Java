@@ -6,3 +6,6 @@
 2025-10-26 10:51:27 [main] INFO :  Product successfully added to cart and visible in cart!
 2025-10-26 10:51:27 [main] INFO :  Checkout and confirmation skipped temporarily. Test will PASS 
 2025-10-26 10:51:28 [main] INFO :  Browser Closed
+2025-10-28 11:56:03 INFO  BaseTest:22 -  Starting SauceDemo Automation Tests
+2025-10-28 11:56:53 INFO  BaseTest:22 -  Starting SauceDemo Automation Tests
+2025-10-28 12:03:48 INFO  BaseTest:23 - 🚀 Starting SauceDemo Automation Tests
